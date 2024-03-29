@@ -11,6 +11,8 @@
     <!-- Custom styles for this template -->
     <link href="heroes.css" rel="stylesheet">
 
+    <!-- P Drage, R Drage, S Drage March - April 2024 -->
+
 
   </head>
   <body>
@@ -30,6 +32,33 @@
       </div>
     </div>
   </div>
+
+
+   <div class="px-4 py-5 my-5 text-center" id="gameOverLose" style="display:none">
+    <img class="d-block mx-auto mb-4" src="./scans/lose.png" alt="You lost" width="220" height="220">
+    <h1 class="display-5 fw-bold">GAME OVER</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Sorry you lost all the eggs, it's game over! Play again?</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onClick="startGame('easy')">Play now (easy)</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4" onClick="startGame('hard')">Hard mode</button>
+      </div>
+    </div>
+  </div>
+
+
+   <div class="px-4 py-5 my-5 text-center" id="gameOverWin" style="display:none">
+    <img class="d-block mx-auto mb-4" src="./scans/win.png" alt="You win!" width="320" height="290">
+    <h1 class="display-5 fw-bold">You won!</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">You've won all these eggs! Nom! Play again?</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onClick="startGame('easy')">Play now (easy)</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4" onClick="startGame('hard')">Hard mode</button>
+      </div>
+    </div>
+  </div>
+
 
   <div class="px-4 py-5 my-5 text-center" id="game" style="display:none">
   	<p class="muted text-end"><span id="points">0</span> points</p>
@@ -83,9 +112,6 @@
 	<script>
 
 		var points = 0;
-		var pointsWon = 0;
-		var won = 0;
-		var lost = 0;
 		var questionsStack;
 		var questionNumber = 0;
 
@@ -109,9 +135,18 @@
 
 			console.log('Game starting with difficulty', difficulty, questionsStack);
 
+			// for replayability
+			$('#gameOverWin').hide();
+			$('#gameOverLose').hide();
 
 			$('#splash').hide();
+
+			// reset our state
 			questionNumber = 0;
+			points = 0;
+			updatePoints();
+			$('#egg-1').hide();
+			// other eggs etc
 
 			setNextQuestionAndAnswers(questionNumber);
 
@@ -122,6 +157,8 @@
 			$('#points').text(points);
 			if (points > 0) {
 				$('#egg-1').fadeIn('fast');
+			} else {
+				$('#egg-1').fadeOut('fast');
 			}
 		}
 
@@ -152,11 +189,15 @@
 		}
 
 		function winGame() {
-			alert('Game over! You won, now eat all those eggs!');
+			// alert('Game over! You won, now eat all those eggs!');
+			$('#game').hide();
+			$('#gameOverWin').fadeIn('fast');
 		}
 
 		function loseGame() {
-			alert('Game over! You lost all the eggs :o(');
+			// alert('Game over! You lost all the eggs :o(');
+			$('#game').hide();
+			$('#gameOverLose').fadeIn('fast');
 		}
 
 		function checkAnswer(thisButtonVal) {
@@ -175,14 +216,15 @@
 				loseRound();
 			}
 
-			setNextQuestionAndAnswers(questionNumber + 1);
+			questionNumber++;
+			setNextQuestionAndAnswers();
 
 		}
 
-		function setNextQuestionAndAnswers(questionNumber) {
+		function setNextQuestionAndAnswers() {
 			// even for the first?
 			$('#question-number').val(questionNumber);
-
+			console.log(questionNumber);
 			var nextQuestion = questionsStack[questionNumber];
 
 			$('#questionText').text(nextQuestion.q);
@@ -208,6 +250,34 @@
 					ao: [
 						2,10,5
 					]
+				},
+				{
+					q: "2x10",
+					a: 20,
+					ao: [
+						20,10,50
+					]
+				},
+				{
+					q: "5x10",
+					a: 50,
+					ao: [
+						50,52,60
+					]
+				},
+				{
+					q: "6x2",
+					a: 12,
+					ao: [
+						6,8,12
+					]
+				},
+				{
+					q: "2x4",
+					a: 8,
+					ao: [
+						8,2,6
+					]
 				}
 
 			];
@@ -228,6 +298,34 @@
 					a: 24,
 					ao: [
 						42,12,24
+					]
+				},
+				{
+					q: "12x4",
+					a: 48,
+					ao: [
+						48,42,46
+					]
+				},
+				{
+					q: "4x9",
+					a: 36,
+					ao: [
+						39,36,32
+					]
+				},
+				{
+					q: "12x9",
+					a: 108,
+					ao: [
+						102,108,110
+					]
+				},
+				{
+					q: "4x6",
+					a: 24,
+					ao: [
+						24,29,22
 					]
 				}
 
