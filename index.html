@@ -38,7 +38,7 @@
     <img class="d-block mx-auto mb-4" src="./scans/lose.png" alt="You lost" width="220" height="220">
     <h1 class="display-5 fw-bold">GAME OVER</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Sorry you lost all the eggs, it's game over! Play again?</p>
+      <p class="lead mb-4"><span id="gameOverLoseReason"></span>, it's game over! Play again?</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onClick="startGame('easy')">Play now (easy)</button>
         <button type="button" class="btn btn-outline-secondary btn-lg px-4" onClick="startGame('hard')">Hard mode</button>
@@ -184,7 +184,7 @@
 			points--;
 			updatePoints();
 			if (points <= 0) {
-				loseGame();
+				loseGame('Sorry, you lost all the eggs!');
 			}
 		}
 
@@ -194,10 +194,11 @@
 			$('#gameOverWin').fadeIn('fast');
 		}
 
-		function loseGame() {
+		function loseGame(reason) {
 			// alert('Game over! You lost all the eggs :o(');
 			$('#game').hide();
 			$('#gameOverLose').fadeIn('fast');
+			$('#gameOverLoseReason').text(reason);
 		}
 
 		function checkAnswer(thisButtonVal) {
@@ -217,6 +218,10 @@
 			}
 
 			questionNumber++;
+			if (questionNumber >= questionsStack.length && points <= 5) {
+				// game over - you ran out of questions
+				loseGame('Sorry you ran out of questions');
+			}
 			setNextQuestionAndAnswers();
 
 		}
