@@ -20,7 +20,7 @@
 <main>
 
   <div class="px-4 py-5 my-5 text-center" id="splash">
-    <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <img class="d-block mx-auto mb-4" src="./scans/egg-main.png" alt="Hoppy Easter 2024" width="90" height="120">
     <h1 class="display-5 fw-bold">EggCollector Game</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">Collect eggs by answering maths questions correctly!</p>
@@ -33,6 +33,8 @@
 
   <div class="px-4 py-5 my-5 text-center" id="game" style="display:none">
   	<p class="muted"><span id="points">0</span> points</p>
+  	<img class="d-block mx-auto mb-4" src="./scans/basket.png" alt="Egg basket" width="90" height="120">
+
   	<input type="hidden" id="question-number" value="0"/>
 
     <h1 class="display-5 fw-bold">EggCollector Game</h1>
@@ -106,7 +108,7 @@
 		}
 
 		function winRound() {
-			alert('yes!');
+			// alert('yes!');
 			console.log('Correct answer');
 			points++;
 			updatePoints();
@@ -116,7 +118,7 @@
 		}
 
 		function loseRound() {
-			alert('nope!');
+			// alert('nope!');
 			console.log('Wrong answer');
 			points--;
 			updatePoints();
