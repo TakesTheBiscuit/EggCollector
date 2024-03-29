@@ -32,8 +32,15 @@
   </div>
 
   <div class="px-4 py-5 my-5 text-center" id="game" style="display:none">
-  	<p class="muted"><span id="points">0</span> points</p>
-  	<img class="d-block mx-auto mb-4" src="./scans/basket.png" alt="Egg basket" width="90" height="120">
+  	<p class="muted text-end"><span id="points">0</span> points</p>
+  	<div id="basket" style="height: 120px;">
+		<img style="position: absolute; z-index: 0; left: 45%;" src="./scans/basket.png" alt="Egg basket" width="90" height="120">
+  		<img id="egg-1" style="display: none; position: relative;
+  				z-index: 2; top: 20px;
+			    left: -10px;" src="./scans/egg-1.png" alt="Egg 1" width="35" height="50">
+
+  	</div> 
+
 
   	<input type="hidden" id="question-number" value="0"/>
 
@@ -57,6 +64,14 @@
   <div id="ready"></div>
 
   <div class="b-example-divider"></div>
+
+  <div style="display: none; position: fixed; left:10px; top:10px;" id="no">
+  	  	<img class="d-block mx-auto mb-4" src="./scans/not-eggsactly.png" alt="Wrong answer" width="250" height="120">
+  </div>
+
+  <div style="display: none; position: fixed; left:10px; top:10px;" id="yes">
+  	<img class="d-block mx-auto mb-4" src="./scans/eggcellent-work.png" alt="Correct answer" width="250" height="120">
+  </div>
 
 </main>
 	<!-- Optional JavaScript -->
@@ -105,11 +120,17 @@
 
 		function updatePoints() {
 			$('#points').text(points);
+			if (points > 0) {
+				$('#egg-1').fadeIn('fast');
+			}
 		}
 
 		function winRound() {
 			// alert('yes!');
 			console.log('Correct answer');
+			$('#no').hide();
+			$('#yes').fadeIn('fast').delay(1200).fadeOut('fast');
+
 			points++;
 			updatePoints();
 			if (points == 5) {
@@ -120,6 +141,9 @@
 		function loseRound() {
 			// alert('nope!');
 			console.log('Wrong answer');
+			$('#yes').hide();
+			$('#no').fadeIn('fast').delay(1200).fadeOut('fast');
+
 			points--;
 			updatePoints();
 			if (points <= 0) {
